@@ -142,7 +142,7 @@ function initSyntaxHighlighting() {
  * Navigate to previous chapter
  */
 function prevChapter(currentId) {
-  const chapters = ['intro', 'chapter1', 'chapter2', 'chapter3', 'chapter4', 'chapter5', 'chapter6', 'chapter7', 'chapter8', 'chapter9'];
+  const chapters = ['intro', 'chapter1', 'chapter2', 'chapter3', 'chapter4', 'chapter5', 'chapter6', 'chapter7', 'chapter8', 'chapter9', 'chapter10'];
   const currentIndex = chapters.indexOf(currentId);
   if (currentIndex > 0) {
     showChapter(chapters[currentIndex - 1]);
@@ -153,7 +153,7 @@ function prevChapter(currentId) {
  * Navigate to next chapter
  */
 function nextChapter(currentId) {
-  const chapters = ['intro', 'chapter1', 'chapter2', 'chapter3', 'chapter4', 'chapter5', 'chapter6', 'chapter7', 'chapter8', 'chapter9'];
+  const chapters = ['intro', 'chapter1', 'chapter2', 'chapter3', 'chapter4', 'chapter5', 'chapter6', 'chapter7', 'chapter8', 'chapter9', 'chapter10'];
   const currentIndex = chapters.indexOf(currentId);
   if (currentIndex < chapters.length - 1) {
     showChapter(chapters[currentIndex + 1]);

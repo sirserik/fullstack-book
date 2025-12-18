@@ -9204,6 +9204,1513 @@ function formatPrice(price: number) {
                     </svg>
                     Назад
                 </button>
+                <button class="nav-btn nav-btn-next" onclick="navigateTo('chapter10')">
+                    Далее
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="5" y1="12" x2="19" y2="12"/>
+                        <polyline points="12,5 19,12 12,19"/>
+                    </svg>
+                </button>
+            </div>
+        </section>
+        <!-- Chapter 10: Tailwind 4 Туториал -->
+        <section class="chapter" id="chapter10">
+            <div class="chapter-header">
+                <span class="chapter-badge">Глава 10</span>
+                <h1>Tailwind 4 Туториал</h1>
+            </div>
+
+            <div class="content-section">
+                <p>Подробное руководство по Tailwind CSS 4 на русском языке. От установки до создания многостраничного сайта.</p>
+<h2>Содержание</h2>
+<ul class="styled-list">
+<li><a href="#что-такое-tailwind-css">Что такое Tailwind CSS</a></li>
+<li><a href="#установка-и-настройка">Установка и настройка</a></li>
+<li><a href="#основы-utility-классов">Основы utility-классов</a></li>
+<li><a href="#flexbox-и-grid">Flexbox и Grid</a></li>
+<li><a href="#адаптивный-дизайн">Адаптивный дизайн</a></li>
+<li><a href="#тёмная-тема">Тёмная тема</a></li>
+<li><a href="#кастомизация-через-theme">Кастомизация через @theme</a></li>
+<li><a href="#компоненты">Компоненты</a></li>
+<li><a href="#практика-многостраничный-сайт">Практика: Многостраничный сайт</a></li>
+</ul>
+<hr>
+<h2>Что такое Tailwind CSS</h2>
+<p>Tailwind CSS — это <strong>utility-first CSS фреймворк</strong>. Вместо готовых компонентов (как в Bootstrap), вы получаете маленькие классы-утилиты, которые комбинируете для создания любого дизайна.</p>
+<h3>Сравнение подходов</h3>
+<p><strong>Традиционный CSS:</strong></p>
+<pre><code class="language-css">/* styles.css */
+.card {
+  background-color: white;
+  border-radius: 8px;
+  padding: 24px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.card-title {
+  font-size: 20px;
+  font-weight: 600;
+  color: #1a1a1a;
+}</code></pre>
+<pre><code class="language-xml">&lt;div class="card"&gt;
+  &lt;h2 class="card-title"&gt;Заголовок&lt;/h2&gt;
+&lt;/div&gt;</code></pre>
+<p><strong>Tailwind CSS:</strong></p>
+<pre><code class="language-xml">&lt;div class="bg-white rounded-lg p-6 shadow-md"&gt;
+  &lt;h2 class="text-xl font-semibold text-gray-900"&gt;Заголовок&lt;/h2&gt;
+&lt;/div&gt;</code></pre>
+<h3>Преимущества Tailwind</h3>
+<div class="table-wrapper"><table>
+<thead><tr><th>Преимущество</th><th>Описание</th></tr></thead>
+<tbody>
+<tr><td>Скорость</td><td>Не нужно придумывать имена классов и писать CSS</td></tr>
+<tr><td>Консистентность</td><td>Единая дизайн-система из коробки</td></tr>
+<tr><td>Размер</td><td>Только используемые стили попадают в финальный CSS</td></tr>
+<tr><td>Гибкость</td><td>Полный контроль над внешним видом</td></tr>
+<tr><td>Адаптивность</td><td>Встроенные брейкпоинты (sm, md, lg, xl, 2xl)</td></tr>
+</tbody></table></div>
+<h3>Что нового в Tailwind CSS 4</h3>
+<ul class="styled-list">
+<li><strong>В 5 раз быстрее</strong> полная сборка</li>
+<li><strong>В 100+ раз быстрее</strong> инкрементальная сборка</li>
+<li><strong>CSS-first конфигурация</strong> — настройка прямо в CSS через <code>@theme</code></li>
+<li><strong>Новые утилиты</strong> — container queries, 3D transforms, градиенты</li>
+<li><strong>Упрощённая установка</strong> — меньше зависимостей</li>
+</ul>
+<hr>
+<h2>Установка и настройка</h2>
+<h3>Способ 1: Vite (рекомендуется)</h3>
+<p>Создаём новый проект:</p>
+<pre><code class="language-bash">npm create vite@latest my-project
+cd my-project
+npm install</code></pre>
+<p>Устанавливаем Tailwind CSS 4:</p>
+<pre><code class="language-bash">npm install tailwindcss @tailwindcss/vite</code></pre>
+<p>Настраиваем Vite (<code>vite.config.js</code>):</p>
+<pre><code class="language-javascript">import { defineConfig } from 'vite'
+import tailwindcss from '@tailwindcss/vite'
+
+export default defineConfig({
+  plugins: [
+    tailwindcss(),
+  ],
+})</code></pre>
+<p>Создаём CSS файл (<code>src/styles.css</code>):</p>
+<pre><code class="language-css">@import "tailwindcss";</code></pre>
+<p>Подключаем в HTML (<code>index.html</code>):</p>
+<pre><code class="language-xml">&lt;!DOCTYPE html&gt;
+&lt;html lang="ru"&gt;
+&lt;head&gt;
+  &lt;meta charset="UTF-8"&gt;
+  &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+  &lt;title&gt;Мой проект&lt;/title&gt;
+  &lt;link rel="stylesheet" href="/src/styles.css"&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;h1 class="text-3xl font-bold text-blue-600"&gt;
+    Привет, Tailwind CSS 4!
+  &lt;/h1&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+<p>Запускаем:</p>
+<pre><code class="language-bash">npm run dev</code></pre>
+<h3>Способ 2: PostCSS</h3>
+<pre><code class="language-bash">npm install tailwindcss @tailwindcss/postcss postcss</code></pre>
+<p>Создаём <code>postcss.config.js</code>:</p>
+<pre><code class="language-javascript">export default {
+  plugins: {
+    '@tailwindcss/postcss': {},
+  },
+}</code></pre>
+<h3>Способ 3: CLI (без сборщика)</h3>
+<pre><code class="language-bash">npm install tailwindcss @tailwindcss/cli</code></pre>
+<p>Запуск:</p>
+<pre><code class="language-bash">npx @tailwindcss/cli -i src/styles.css -o dist/styles.css --watch</code></pre>
+<h3>Способ 4: CDN (для экспериментов)</h3>
+<pre><code class="language-xml">&lt;!DOCTYPE html&gt;
+&lt;html lang="ru"&gt;
+&lt;head&gt;
+  &lt;meta charset="UTF-8"&gt;
+  &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+  &lt;title&gt;Tailwind CSS 4&lt;/title&gt;
+  &lt;script src="https://cdn.tailwindcss.com"&gt;&lt;/script&gt;
+&lt;/head&gt;
+&lt;body class="bg-gray-100 min-h-screen"&gt;
+  &lt;div class="container mx-auto p-8"&gt;
+    &lt;h1 class="text-4xl font-bold text-center text-blue-600"&gt;
+      Привет, мир!
+    &lt;/h1&gt;
+  &lt;/div&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+<p>> <strong>Важно:</strong> CDN — только для обучения и прототипов. Для production используйте полную установку.</p>
+<hr>
+<h2>Основы utility-классов</h2>
+<h3>Цвета</h3>
+<p>Tailwind использует шкалу от 50 (светлый) до 950 (тёмный):</p>
+<pre><code class="language-xml">&lt;!-- Цвет текста --&gt;
+&lt;p class="text-gray-500"&gt;Серый текст&lt;/p&gt;
+&lt;p class="text-blue-600"&gt;Синий текст&lt;/p&gt;
+&lt;p class="text-red-500"&gt;Красный текст&lt;/p&gt;
+
+&lt;!-- Цвет фона --&gt;
+&lt;div class="bg-white"&gt;Белый фон&lt;/div&gt;
+&lt;div class="bg-gray-100"&gt;Светло-серый фон&lt;/div&gt;
+&lt;div class="bg-blue-500"&gt;Синий фон&lt;/div&gt;
+
+&lt;!-- Цвет рамки --&gt;
+&lt;div class="border border-gray-300"&gt;Серая рамка&lt;/div&gt;
+&lt;div class="border-2 border-blue-500"&gt;Синяя рамка 2px&lt;/div&gt;</code></pre>
+<p><strong>Доступные цвета:</strong></p>
+<ul class="styled-list">
+<li><code>slate</code>, <code>gray</code>, <code>zinc</code>, <code>neutral</code>, <code>stone</code> — оттенки серого</li>
+<li><code>red</code>, <code>orange</code>, <code>amber</code>, <code>yellow</code> — тёплые</li>
+<li><code>lime</code>, <code>green</code>, <code>emerald</code>, <code>teal</code> — зелёные</li>
+<li><code>cyan</code>, <code>sky</code>, <code>blue</code>, <code>indigo</code> — синие</li>
+<li><code>violet</code>, <code>purple</code>, <code>fuchsia</code>, <code>pink</code>, <code>rose</code> — фиолетовые/розовые</li>
+</ul>
+<h3>Отступы</h3>
+<p><strong>Padding (внутренние отступы):</strong></p>
+<pre><code class="language-xml">&lt;div class="p-4"&gt;Отступы со всех сторон (16px)&lt;/div&gt;
+&lt;div class="px-4"&gt;Горизонтальные отступы&lt;/div&gt;
+&lt;div class="py-2"&gt;Вертикальные отступы&lt;/div&gt;
+&lt;div class="pt-4"&gt;Только сверху&lt;/div&gt;
+&lt;div class="pr-4"&gt;Только справа&lt;/div&gt;
+&lt;div class="pb-4"&gt;Только снизу&lt;/div&gt;
+&lt;div class="pl-4"&gt;Только слева&lt;/div&gt;</code></pre>
+<p><strong>Margin (внешние отступы):</strong></p>
+<pre><code class="language-xml">&lt;div class="m-4"&gt;Отступы со всех сторон&lt;/div&gt;
+&lt;div class="mx-auto"&gt;Центрирование по горизонтали&lt;/div&gt;
+&lt;div class="my-8"&gt;Вертикальные отступы&lt;/div&gt;
+&lt;div class="mt-4"&gt;Только сверху&lt;/div&gt;
+&lt;div class="mb-4"&gt;Только снизу&lt;/div&gt;</code></pre>
+<p><strong>Шкала отступов:</strong></p>
+<div class="table-wrapper"><table>
+<thead><tr><th>Класс</th><th>Значение</th></tr></thead>
+<tbody>
+<tr><td><code>p-0</code></td><td>0px</td></tr>
+<tr><td><code>p-1</code></td><td>4px (0.25rem)</td></tr>
+<tr><td><code>p-2</code></td><td>8px (0.5rem)</td></tr>
+<tr><td><code>p-3</code></td><td>12px (0.75rem)</td></tr>
+<tr><td><code>p-4</code></td><td>16px (1rem)</td></tr>
+<tr><td><code>p-5</code></td><td>20px (1.25rem)</td></tr>
+<tr><td><code>p-6</code></td><td>24px (1.5rem)</td></tr>
+<tr><td><code>p-8</code></td><td>32px (2rem)</td></tr>
+<tr><td><code>p-10</code></td><td>40px (2.5rem)</td></tr>
+<tr><td><code>p-12</code></td><td>48px (3rem)</td></tr>
+<tr><td><code>p-16</code></td><td>64px (4rem)</td></tr>
+<tr><td><code>p-20</code></td><td>80px (5rem)</td></tr>
+</tbody></table></div>
+<h3>Размеры</h3>
+<p><strong>Ширина:</strong></p>
+<pre><code class="language-xml">&lt;div class="w-full"&gt;100% ширины&lt;/div&gt;
+&lt;div class="w-1/2"&gt;50% ширины&lt;/div&gt;
+&lt;div class="w-1/3"&gt;33.33% ширины&lt;/div&gt;
+&lt;div class="w-64"&gt;256px&lt;/div&gt;
+&lt;div class="w-screen"&gt;100vw&lt;/div&gt;
+&lt;div class="max-w-md"&gt;Максимум 448px&lt;/div&gt;
+&lt;div class="max-w-4xl"&gt;Максимум 896px&lt;/div&gt;</code></pre>
+<p><strong>Высота:</strong></p>
+<pre><code class="language-xml">&lt;div class="h-screen"&gt;100vh&lt;/div&gt;
+&lt;div class="h-full"&gt;100%&lt;/div&gt;
+&lt;div class="h-64"&gt;256px&lt;/div&gt;
+&lt;div class="min-h-screen"&gt;Минимум 100vh&lt;/div&gt;</code></pre>
+<h3>Типографика</h3>
+<pre><code class="language-xml">&lt;!-- Размер шрифта --&gt;
+&lt;p class="text-xs"&gt;12px&lt;/p&gt;
+&lt;p class="text-sm"&gt;14px&lt;/p&gt;
+&lt;p class="text-base"&gt;16px (базовый)&lt;/p&gt;
+&lt;p class="text-lg"&gt;18px&lt;/p&gt;
+&lt;p class="text-xl"&gt;20px&lt;/p&gt;
+&lt;p class="text-2xl"&gt;24px&lt;/p&gt;
+&lt;p class="text-3xl"&gt;30px&lt;/p&gt;
+&lt;p class="text-4xl"&gt;36px&lt;/p&gt;
+&lt;p class="text-5xl"&gt;48px&lt;/p&gt;
+
+&lt;!-- Жирность --&gt;
+&lt;p class="font-light"&gt;Тонкий (300)&lt;/p&gt;
+&lt;p class="font-normal"&gt;Обычный (400)&lt;/p&gt;
+&lt;p class="font-medium"&gt;Средний (500)&lt;/p&gt;
+&lt;p class="font-semibold"&gt;Полужирный (600)&lt;/p&gt;
+&lt;p class="font-bold"&gt;Жирный (700)&lt;/p&gt;
+
+&lt;!-- Выравнивание --&gt;
+&lt;p class="text-left"&gt;По левому краю&lt;/p&gt;
+&lt;p class="text-center"&gt;По центру&lt;/p&gt;
+&lt;p class="text-right"&gt;По правому краю&lt;/p&gt;
+
+&lt;!-- Межстрочный интервал --&gt;
+&lt;p class="leading-tight"&gt;Плотный&lt;/p&gt;
+&lt;p class="leading-normal"&gt;Обычный&lt;/p&gt;
+&lt;p class="leading-relaxed"&gt;Свободный&lt;/p&gt;</code></pre>
+<h3>Рамки и скругления</h3>
+<pre><code class="language-xml">&lt;!-- Рамки --&gt;
+&lt;div class="border"&gt;Рамка 1px&lt;/div&gt;
+&lt;div class="border-2"&gt;Рамка 2px&lt;/div&gt;
+&lt;div class="border-4"&gt;Рамка 4px&lt;/div&gt;
+
+&lt;!-- Скругления --&gt;
+&lt;div class="rounded"&gt;4px&lt;/div&gt;
+&lt;div class="rounded-md"&gt;6px&lt;/div&gt;
+&lt;div class="rounded-lg"&gt;8px&lt;/div&gt;
+&lt;div class="rounded-xl"&gt;12px&lt;/div&gt;
+&lt;div class="rounded-2xl"&gt;16px&lt;/div&gt;
+&lt;div class="rounded-full"&gt;Круг&lt;/div&gt;
+
+&lt;!-- Скругление отдельных углов --&gt;
+&lt;div class="rounded-t-lg"&gt;Сверху&lt;/div&gt;
+&lt;div class="rounded-b-lg"&gt;Снизу&lt;/div&gt;
+&lt;div class="rounded-l-lg"&gt;Слева&lt;/div&gt;
+&lt;div class="rounded-r-lg"&gt;Справа&lt;/div&gt;</code></pre>
+<h3>Тени</h3>
+<pre><code class="language-xml">&lt;div class="shadow-sm"&gt;Маленькая тень&lt;/div&gt;
+&lt;div class="shadow"&gt;Обычная тень&lt;/div&gt;
+&lt;div class="shadow-md"&gt;Средняя тень&lt;/div&gt;
+&lt;div class="shadow-lg"&gt;Большая тень&lt;/div&gt;
+&lt;div class="shadow-xl"&gt;Очень большая&lt;/div&gt;
+&lt;div class="shadow-2xl"&gt;Максимальная&lt;/div&gt;
+&lt;div class="shadow-none"&gt;Без тени&lt;/div&gt;</code></pre>
+<h3>Состояния (hover, focus, active)</h3>
+<pre><code class="language-xml">&lt;!-- Hover --&gt;
+&lt;button class="bg-blue-500 hover:bg-blue-600"&gt;
+  Наведи на меня
+&lt;/button&gt;
+
+&lt;!-- Focus --&gt;
+&lt;input class="border focus:border-blue-500 focus:ring-2 focus:ring-blue-200"&gt;
+
+&lt;!-- Active --&gt;
+&lt;button class="bg-blue-500 active:bg-blue-700"&gt;
+  Нажми меня
+&lt;/button&gt;
+
+&lt;!-- Комбинация --&gt;
+&lt;button class="
+  bg-blue-500
+  hover:bg-blue-600
+  focus:ring-2
+  focus:ring-blue-300
+  active:bg-blue-700
+  transition
+"&gt;
+  Кнопка
+&lt;/button&gt;</code></pre>
+<h3>Переходы и анимации</h3>
+<pre><code class="language-xml">&lt;!-- Плавный переход --&gt;
+&lt;div class="transition hover:bg-blue-500"&gt;
+  Плавное изменение
+&lt;/div&gt;
+
+&lt;!-- Настройка перехода --&gt;
+&lt;div class="transition-all duration-300 ease-in-out"&gt;
+  Все свойства за 300ms
+&lt;/div&gt;
+
+&lt;div class="transition-colors duration-200"&gt;
+  Только цвета
+&lt;/div&gt;
+
+&lt;div class="transition-transform duration-500 hover:scale-105"&gt;
+  Масштабирование
+&lt;/div&gt;</code></pre>
+<hr>
+<h2>Практика: Первая карточка</h2>
+<p>Создадим красивую карточку товара:</p>
+<pre><code class="language-xml">&lt;div class="max-w-sm mx-auto mt-10"&gt;
+  &lt;div class="bg-white rounded-2xl shadow-lg overflow-hidden"&gt;
+    &lt;!-- Изображение --&gt;
+    &lt;img
+      src="https://picsum.photos/400/300"
+      alt="Товар"
+      class="w-full h-48 object-cover"
+    &gt;
+
+    &lt;!-- Контент --&gt;
+    &lt;div class="p-6"&gt;
+      &lt;!-- Категория --&gt;
+      &lt;span class="text-xs font-semibold text-blue-600 uppercase tracking-wide"&gt;
+        Электроника
+      &lt;/span&gt;
+
+      &lt;!-- Заголовок --&gt;
+      &lt;h2 class="mt-2 text-xl font-bold text-gray-900"&gt;
+        Беспроводные наушники
+      &lt;/h2&gt;
+
+      &lt;!-- Описание --&gt;
+      &lt;p class="mt-2 text-gray-600 text-sm leading-relaxed"&gt;
+        Качественный звук и активное шумоподавление для комфортного прослушивания музыки.
+      &lt;/p&gt;
+
+      &lt;!-- Цена и кнопка --&gt;
+      &lt;div class="mt-4 flex items-center justify-between"&gt;
+        &lt;span class="text-2xl font-bold text-gray-900"&gt;
+          $299
+        &lt;/span&gt;
+        &lt;button class="
+          px-4 py-2
+          bg-blue-600 text-white
+          rounded-lg font-medium
+          hover:bg-blue-700
+          transition-colors
+        "&gt;
+          В корзину
+        &lt;/button&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+<p><strong>Результат:</strong> Красивая карточка с тенью, скруглёнными углами, изображением и интерактивной кнопкой.</p>
+<hr>
+<hr>
+<h2>Flexbox и Grid</h2>
+<h3>Flexbox — основы</h3>
+<p>Flexbox идеален для одномерных раскладок (строка или колонка).</p>
+<p><strong>Включение Flexbox:</strong></p>
+<pre><code class="language-xml">&lt;div class="flex"&gt;
+  &lt;div&gt;Элемент 1&lt;/div&gt;
+  &lt;div&gt;Элемент 2&lt;/div&gt;
+  &lt;div&gt;Элемент 3&lt;/div&gt;
+&lt;/div&gt;</code></pre>
+<p><strong>Направление:</strong></p>
+<pre><code class="language-xml">&lt;!-- Горизонтально (по умолчанию) --&gt;
+&lt;div class="flex flex-row"&gt;...&lt;/div&gt;
+
+&lt;!-- Вертикально --&gt;
+&lt;div class="flex flex-col"&gt;...&lt;/div&gt;
+
+&lt;!-- Обратный порядок --&gt;
+&lt;div class="flex flex-row-reverse"&gt;...&lt;/div&gt;
+&lt;div class="flex flex-col-reverse"&gt;...&lt;/div&gt;</code></pre>
+<p><strong>Выравнивание по главной оси (justify):</strong></p>
+<pre><code class="language-xml">&lt;!-- Горизонтальное выравнивание для flex-row --&gt;
+&lt;div class="flex justify-start"&gt;В начало&lt;/div&gt;
+&lt;div class="flex justify-center"&gt;По центру&lt;/div&gt;
+&lt;div class="flex justify-end"&gt;В конец&lt;/div&gt;
+&lt;div class="flex justify-between"&gt;Между элементами&lt;/div&gt;
+&lt;div class="flex justify-around"&gt;Вокруг элементов&lt;/div&gt;
+&lt;div class="flex justify-evenly"&gt;Равномерно&lt;/div&gt;</code></pre>
+<p><strong>Выравнивание по поперечной оси (items):</strong></p>
+<pre><code class="language-xml">&lt;!-- Вертикальное выравнивание для flex-row --&gt;
+&lt;div class="flex items-start"&gt;Сверху&lt;/div&gt;
+&lt;div class="flex items-center"&gt;По центру&lt;/div&gt;
+&lt;div class="flex items-end"&gt;Снизу&lt;/div&gt;
+&lt;div class="flex items-stretch"&gt;Растянуть (по умолчанию)&lt;/div&gt;</code></pre>
+<p><strong>Отступы между элементами (gap):</strong></p>
+<pre><code class="language-xml">&lt;div class="flex gap-4"&gt;
+  &lt;div&gt;Элемент&lt;/div&gt;
+  &lt;div&gt;Элемент&lt;/div&gt;
+  &lt;div&gt;Элемент&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;!-- Разные отступы --&gt;
+&lt;div class="flex gap-x-4 gap-y-2"&gt;...&lt;/div&gt;</code></pre>
+<p><strong>Перенос на новую строку:</strong></p>
+<pre><code class="language-xml">&lt;div class="flex flex-wrap"&gt;
+  &lt;!-- Элементы переносятся если не помещаются --&gt;
+&lt;/div&gt;</code></pre>
+<p><strong>Управление элементами:</strong></p>
+<pre><code class="language-xml">&lt;div class="flex"&gt;
+  &lt;div class="flex-1"&gt;Занимает всё свободное место&lt;/div&gt;
+  &lt;div class="flex-none"&gt;Не растягивается&lt;/div&gt;
+  &lt;div class="flex-auto"&gt;Растягивается от контента&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;!-- Порядок --&gt;
+&lt;div class="flex"&gt;
+  &lt;div class="order-3"&gt;Третий&lt;/div&gt;
+  &lt;div class="order-1"&gt;Первый&lt;/div&gt;
+  &lt;div class="order-2"&gt;Второй&lt;/div&gt;
+&lt;/div&gt;</code></pre>
+<h3>Практика: Навигация с Flexbox</h3>
+<pre><code class="language-xml">&lt;nav class="bg-white shadow"&gt;
+  &lt;div class="max-w-6xl mx-auto px-4"&gt;
+    &lt;div class="flex justify-between items-center h-16"&gt;
+      &lt;!-- Логотип --&gt;
+      &lt;a href="#" class="text-xl font-bold text-blue-600"&gt;
+        MyBrand
+      &lt;/a&gt;
+
+      &lt;!-- Меню --&gt;
+      &lt;div class="flex items-center gap-8"&gt;
+        &lt;a href="#" class="text-gray-600 hover:text-blue-600 transition"&gt;
+          Главная
+        &lt;/a&gt;
+        &lt;a href="#" class="text-gray-600 hover:text-blue-600 transition"&gt;
+          О нас
+        &lt;/a&gt;
+        &lt;a href="#" class="text-gray-600 hover:text-blue-600 transition"&gt;
+          Услуги
+        &lt;/a&gt;
+        &lt;a href="#" class="text-gray-600 hover:text-blue-600 transition"&gt;
+          Контакты
+        &lt;/a&gt;
+      &lt;/div&gt;
+
+      &lt;!-- Кнопка --&gt;
+      &lt;button class="
+        px-4 py-2
+        bg-blue-600 text-white
+        rounded-lg font-medium
+        hover:bg-blue-700 transition
+      "&gt;
+        Войти
+      &lt;/button&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/nav&gt;</code></pre>
+<h3>Практика: Центрирование</h3>
+<pre><code class="language-xml">&lt;!-- Центрирование по вертикали и горизонтали --&gt;
+&lt;div class="min-h-screen flex items-center justify-center bg-gray-100"&gt;
+  &lt;div class="bg-white p-8 rounded-xl shadow-lg"&gt;
+    &lt;h1 class="text-2xl font-bold"&gt;Центрированный блок&lt;/h1&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+<h3>Grid — основы</h3>
+<p>CSS Grid идеален для двумерных раскладок (строки И колонки).</p>
+<p><strong>Включение Grid:</strong></p>
+<pre><code class="language-xml">&lt;div class="grid grid-cols-3 gap-4"&gt;
+  &lt;div&gt;1&lt;/div&gt;
+  &lt;div&gt;2&lt;/div&gt;
+  &lt;div&gt;3&lt;/div&gt;
+  &lt;div&gt;4&lt;/div&gt;
+  &lt;div&gt;5&lt;/div&gt;
+  &lt;div&gt;6&lt;/div&gt;
+&lt;/div&gt;</code></pre>
+<p><strong>Количество колонок:</strong></p>
+<pre><code class="language-xml">&lt;div class="grid grid-cols-1"&gt;1 колонка&lt;/div&gt;
+&lt;div class="grid grid-cols-2"&gt;2 колонки&lt;/div&gt;
+&lt;div class="grid grid-cols-3"&gt;3 колонки&lt;/div&gt;
+&lt;div class="grid grid-cols-4"&gt;4 колонки&lt;/div&gt;
+&lt;div class="grid grid-cols-6"&gt;6 колонок&lt;/div&gt;
+&lt;div class="grid grid-cols-12"&gt;12 колонок&lt;/div&gt;</code></pre>
+<p><strong>Отступы:</strong></p>
+<pre><code class="language-xml">&lt;div class="grid grid-cols-3 gap-4"&gt;Одинаковые отступы&lt;/div&gt;
+&lt;div class="grid grid-cols-3 gap-x-4 gap-y-8"&gt;Разные отступы&lt;/div&gt;</code></pre>
+<p><strong>Объединение ячеек:</strong></p>
+<pre><code class="language-xml">&lt;div class="grid grid-cols-3 gap-4"&gt;
+  &lt;div class="col-span-2"&gt;Занимает 2 колонки&lt;/div&gt;
+  &lt;div&gt;1 колонка&lt;/div&gt;
+  &lt;div class="col-span-3"&gt;Вся ширина&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;!-- Строки --&gt;
+&lt;div class="grid grid-cols-2 gap-4"&gt;
+  &lt;div class="row-span-2"&gt;Занимает 2 строки&lt;/div&gt;
+  &lt;div&gt;Обычная ячейка&lt;/div&gt;
+  &lt;div&gt;Обычная ячейка&lt;/div&gt;
+&lt;/div&gt;</code></pre>
+<p><strong>Автоматические колонки:</strong></p>
+<pre><code class="language-xml">&lt;!-- Минимум 250px, максимум равное распределение --&gt;
+&lt;div class="grid grid-cols-[repeat(auto-fill,minmax(250px,1fr))] gap-4"&gt;
+  &lt;div&gt;Карточка&lt;/div&gt;
+  &lt;div&gt;Карточка&lt;/div&gt;
+  &lt;div&gt;Карточка&lt;/div&gt;
+  &lt;div&gt;Карточка&lt;/div&gt;
+&lt;/div&gt;</code></pre>
+<h3>Практика: Сетка карточек</h3>
+<pre><code class="language-xml">&lt;div class="max-w-6xl mx-auto p-8"&gt;
+  &lt;h2 class="text-3xl font-bold text-gray-900 mb-8"&gt;
+    Наши услуги
+  &lt;/h2&gt;
+
+  &lt;div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"&gt;
+    &lt;!-- Карточка 1 --&gt;
+    &lt;div class="bg-white p-6 rounded-xl shadow-md hover:shadow-lg transition"&gt;
+      &lt;div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mb-4"&gt;
+        &lt;svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"&gt;
+          &lt;path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/&gt;
+        &lt;/svg&gt;
+      &lt;/div&gt;
+      &lt;h3 class="text-lg font-semibold text-gray-900 mb-2"&gt;
+        Быстрая доставка
+      &lt;/h3&gt;
+      &lt;p class="text-gray-600 text-sm"&gt;
+        Доставим ваш заказ в течение 24 часов по всему городу.
+      &lt;/p&gt;
+    &lt;/div&gt;
+
+    &lt;!-- Карточка 2 --&gt;
+    &lt;div class="bg-white p-6 rounded-xl shadow-md hover:shadow-lg transition"&gt;
+      &lt;div class="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center mb-4"&gt;
+        &lt;svg class="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"&gt;
+          &lt;path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/&gt;
+        &lt;/svg&gt;
+      &lt;/div&gt;
+      &lt;h3 class="text-lg font-semibold text-gray-900 mb-2"&gt;
+        Гарантия качества
+      &lt;/h3&gt;
+      &lt;p class="text-gray-600 text-sm"&gt;
+        100% гарантия на все товары. Возврат в течение 30 дней.
+      &lt;/p&gt;
+    &lt;/div&gt;
+
+    &lt;!-- Карточка 3 --&gt;
+    &lt;div class="bg-white p-6 rounded-xl shadow-md hover:shadow-lg transition"&gt;
+      &lt;div class="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center mb-4"&gt;
+        &lt;svg class="w-6 h-6 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"&gt;
+          &lt;path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18.364 5.636l-3.536 3.536m0 5.656l3.536 3.536M9.172 9.172L5.636 5.636m3.536 9.192l-3.536 3.536"/&gt;
+        &lt;/svg&gt;
+      &lt;/div&gt;
+      &lt;h3 class="text-lg font-semibold text-gray-900 mb-2"&gt;
+        Поддержка 24/7
+      &lt;/h3&gt;
+      &lt;p class="text-gray-600 text-sm"&gt;
+        Наша команда всегда готова помочь вам в любое время.
+      &lt;/p&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+<h3>Практика: Сложная раскладка</h3>
+<pre><code class="language-xml">&lt;div class="grid grid-cols-4 grid-rows-3 gap-4 h-screen p-4"&gt;
+  &lt;!-- Шапка на всю ширину --&gt;
+  &lt;header class="col-span-4 bg-blue-600 rounded-xl flex items-center justify-center"&gt;
+    &lt;h1 class="text-white text-2xl font-bold"&gt;Header&lt;/h1&gt;
+  &lt;/header&gt;
+
+  &lt;!-- Сайдбар --&gt;
+  &lt;aside class="row-span-2 bg-gray-200 rounded-xl p-4"&gt;
+    &lt;h2 class="font-bold mb-4"&gt;Sidebar&lt;/h2&gt;
+    &lt;nav class="space-y-2"&gt;
+      &lt;a href="#" class="block text-gray-600 hover:text-blue-600"&gt;Ссылка 1&lt;/a&gt;
+      &lt;a href="#" class="block text-gray-600 hover:text-blue-600"&gt;Ссылка 2&lt;/a&gt;
+      &lt;a href="#" class="block text-gray-600 hover:text-blue-600"&gt;Ссылка 3&lt;/a&gt;
+    &lt;/nav&gt;
+  &lt;/aside&gt;
+
+  &lt;!-- Основной контент --&gt;
+  &lt;main class="col-span-3 row-span-2 bg-white rounded-xl shadow p-6"&gt;
+    &lt;h2 class="text-xl font-bold mb-4"&gt;Main Content&lt;/h2&gt;
+    &lt;p class="text-gray-600"&gt;
+      Здесь находится основной контент страницы.
+    &lt;/p&gt;
+  &lt;/main&gt;
+&lt;/div&gt;</code></pre>
+<hr>
+<h2>Адаптивный дизайн</h2>
+<p>Tailwind использует подход <strong>mobile-first</strong>. Базовые стили применяются к мобильным устройствам, а модификаторы добавляют стили для больших экранов.</p>
+<h3>Брейкпоинты</h3>
+<div class="table-wrapper"><table>
+<thead><tr><th>Префикс</th><th>Минимальная ширина</th><th>CSS</th></tr></thead>
+<tbody>
+<tr><td><code>sm</code></td><td>640px</td><td><code>@media (min-width: 640px)</code></td></tr>
+<tr><td><code>md</code></td><td>768px</td><td><code>@media (min-width: 768px)</code></td></tr>
+<tr><td><code>lg</code></td><td>1024px</td><td><code>@media (min-width: 1024px)</code></td></tr>
+<tr><td><code>xl</code></td><td>1280px</td><td><code>@media (min-width: 1280px)</code></td></tr>
+<tr><td><code>2xl</code></td><td>1536px</td><td><code>@media (min-width: 1536px)</code></td></tr>
+</tbody></table></div>
+<h3>Использование</h3>
+<pre><code class="language-xml">&lt;!-- Мобильный: 1 колонка, Планшет: 2, Десктоп: 4 --&gt;
+&lt;div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4"&gt;
+  &lt;div&gt;Карточка 1&lt;/div&gt;
+  &lt;div&gt;Карточка 2&lt;/div&gt;
+  &lt;div&gt;Карточка 3&lt;/div&gt;
+  &lt;div&gt;Карточка 4&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;!-- Скрыть на мобильном --&gt;
+&lt;div class="hidden md:block"&gt;
+  Видно только на планшетах и выше
+&lt;/div&gt;
+
+&lt;!-- Показать только на мобильном --&gt;
+&lt;div class="block md:hidden"&gt;
+  Видно только на мобильных
+&lt;/div&gt;
+
+&lt;!-- Разные отступы --&gt;
+&lt;div class="p-4 md:p-6 lg:p-8 xl:p-12"&gt;
+  Адаптивные отступы
+&lt;/div&gt;
+
+&lt;!-- Разный размер текста --&gt;
+&lt;h1 class="text-2xl md:text-3xl lg:text-4xl xl:text-5xl"&gt;
+  Адаптивный заголовок
+&lt;/h1&gt;</code></pre>
+<h3>Практика: Адаптивная навигация</h3>
+<pre><code class="language-xml">&lt;nav class="bg-white shadow"&gt;
+  &lt;div class="max-w-6xl mx-auto px-4"&gt;
+    &lt;div class="flex justify-between items-center h-16"&gt;
+      &lt;!-- Логотип --&gt;
+      &lt;a href="#" class="text-xl font-bold text-blue-600"&gt;
+        MyBrand
+      &lt;/a&gt;
+
+      &lt;!-- Бургер-меню (мобильное) --&gt;
+      &lt;button class="md:hidden p-2"&gt;
+        &lt;svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"&gt;
+          &lt;path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/&gt;
+        &lt;/svg&gt;
+      &lt;/button&gt;
+
+      &lt;!-- Меню (десктоп) --&gt;
+      &lt;div class="hidden md:flex items-center gap-8"&gt;
+        &lt;a href="#" class="text-gray-600 hover:text-blue-600"&gt;Главная&lt;/a&gt;
+        &lt;a href="#" class="text-gray-600 hover:text-blue-600"&gt;О нас&lt;/a&gt;
+        &lt;a href="#" class="text-gray-600 hover:text-blue-600"&gt;Услуги&lt;/a&gt;
+        &lt;a href="#" class="text-gray-600 hover:text-blue-600"&gt;Контакты&lt;/a&gt;
+        &lt;button class="px-4 py-2 bg-blue-600 text-white rounded-lg"&gt;
+          Войти
+        &lt;/button&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/nav&gt;</code></pre>
+<h3>Практика: Адаптивный Hero-блок</h3>
+<pre><code class="language-xml">&lt;section class="bg-gradient-to-br from-blue-600 to-purple-700 min-h-screen"&gt;
+  &lt;div class="max-w-6xl mx-auto px-4 py-12 md:py-20 lg:py-32"&gt;
+    &lt;div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center"&gt;
+      &lt;!-- Текст --&gt;
+      &lt;div class="text-center lg:text-left"&gt;
+        &lt;h1 class="
+          text-3xl md:text-4xl lg:text-5xl xl:text-6xl
+          font-bold text-white leading-tight
+        "&gt;
+          Создаём цифровые продукты
+        &lt;/h1&gt;
+        &lt;p class="
+          mt-4 md:mt-6
+          text-lg md:text-xl
+          text-blue-100
+          max-w-xl mx-auto lg:mx-0
+        "&gt;
+          Мы помогаем бизнесу расти с помощью современных технологий
+          и инновационных решений.
+        &lt;/p&gt;
+        &lt;div class="mt-8 flex flex-col sm:flex-row gap-4 justify-center lg:justify-start"&gt;
+          &lt;button class="
+            px-8 py-3
+            bg-white text-blue-600
+            rounded-lg font-semibold
+            hover:bg-gray-100 transition
+          "&gt;
+            Начать проект
+          &lt;/button&gt;
+          &lt;button class="
+            px-8 py-3
+            border-2 border-white text-white
+            rounded-lg font-semibold
+            hover:bg-white/10 transition
+          "&gt;
+            Узнать больше
+          &lt;/button&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+
+      &lt;!-- Изображение --&gt;
+      &lt;div class="hidden lg:block"&gt;
+        &lt;img
+          src="https://picsum.photos/600/400"
+          alt="Hero"
+          class="rounded-2xl shadow-2xl"
+        &gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/section&gt;</code></pre>
+<hr>
+<h2>Тёмная тема</h2>
+<h3>Автоматическая (системные настройки)</h3>
+<p>По умолчанию Tailwind CSS 4 использует системные настройки:</p>
+<pre><code class="language-xml">&lt;div class="bg-white dark:bg-gray-900"&gt;
+  &lt;h1 class="text-gray-900 dark:text-white"&gt;
+    Заголовок
+  &lt;/h1&gt;
+  &lt;p class="text-gray-600 dark:text-gray-400"&gt;
+    Текст параграфа
+  &lt;/p&gt;
+&lt;/div&gt;</code></pre>
+<h3>Ручное переключение</h3>
+<p>Добавьте в CSS:</p>
+<pre><code class="language-css">@import "tailwindcss";
+
+@variant dark (&amp;:where(.dark, .dark *));</code></pre>
+<p>Теперь тёмная тема активируется классом <code>dark</code> на <code><html></code>:</p>
+<pre><code class="language-xml">&lt;html class="dark"&gt;
+  &lt;body class="bg-white dark:bg-gray-900"&gt;
+    ...
+  &lt;/body&gt;
+&lt;/html&gt;</code></pre>
+<p><strong>JavaScript для переключения:</strong></p>
+<pre><code class="language-xml">&lt;button onclick="toggleDark()" class="p-2 rounded-lg bg-gray-200 dark:bg-gray-700"&gt;
+  &lt;span class="dark:hidden"&gt;🌙&lt;/span&gt;
+  &lt;span class="hidden dark:inline"&gt;☀️&lt;/span&gt;
+&lt;/button&gt;
+
+&lt;script&gt;
+function toggleDark() {
+  document.documentElement.classList.toggle('dark');
+  localStorage.setItem('theme',
+    document.documentElement.classList.contains('dark') ? 'dark' : 'light'
+  );
+}
+
+// Загрузка сохранённой темы
+if (localStorage.theme === 'dark' ||
+    (!localStorage.theme &amp;&amp; window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+  document.documentElement.classList.add('dark');
+}
+&lt;/script&gt;</code></pre>
+<h3>Практика: Карточка с тёмной темой</h3>
+<pre><code class="language-xml">&lt;div class="
+  bg-white dark:bg-gray-800
+  rounded-xl shadow-lg dark:shadow-gray-900/50
+  p-6
+  transition-colors duration-300
+"&gt;
+  &lt;div class="flex items-center gap-4"&gt;
+    &lt;img
+      src="https://i.pravatar.cc/100"
+      alt="Avatar"
+      class="w-12 h-12 rounded-full"
+    &gt;
+    &lt;div&gt;
+      &lt;h3 class="font-semibold text-gray-900 dark:text-white"&gt;
+        Иван Иванов
+      &lt;/h3&gt;
+      &lt;p class="text-sm text-gray-500 dark:text-gray-400"&gt;
+        Frontend Developer
+      &lt;/p&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+
+  &lt;p class="mt-4 text-gray-600 dark:text-gray-300"&gt;
+    Занимаюсь веб-разработкой более 5 лет.
+    Специализируюсь на React и Vue.
+  &lt;/p&gt;
+
+  &lt;div class="mt-4 flex gap-2"&gt;
+    &lt;span class="
+      px-3 py-1
+      bg-blue-100 dark:bg-blue-900
+      text-blue-600 dark:text-blue-300
+      rounded-full text-sm
+    "&gt;
+      React
+    &lt;/span&gt;
+    &lt;span class="
+      px-3 py-1
+      bg-green-100 dark:bg-green-900
+      text-green-600 dark:text-green-300
+      rounded-full text-sm
+    "&gt;
+      Vue
+    &lt;/span&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+<hr>
+<h2>Кастомизация через @theme</h2>
+<p>В Tailwind CSS 4 конфигурация происходит прямо в CSS через директиву <code>@theme</code>.</p>
+<h3>Базовая настройка</h3>
+<pre><code class="language-css">/* styles.css */
+@import "tailwindcss";
+
+@theme {
+  /* Кастомные цвета */
+  --color-primary: #6366f1;
+  --color-primary-dark: #4f46e5;
+  --color-secondary: #ec4899;
+  --color-accent: #f59e0b;
+
+  /* Шрифты */
+  --font-sans: "Inter", system-ui, sans-serif;
+  --font-display: "Montserrat", sans-serif;
+
+  /* Кастомные размеры */
+  --spacing-18: 4.5rem;
+  --spacing-128: 32rem;
+
+  /* Кастомные брейкпоинты */
+  --breakpoint-xs: 475px;
+  --breakpoint-3xl: 1920px;
+
+  /* Тени */
+  --shadow-soft: 0 4px 20px rgba(0, 0, 0, 0.08);
+  --shadow-glow: 0 0 30px rgba(99, 102, 241, 0.3);
+
+  /* Радиусы */
+  --radius-4xl: 2rem;
+
+  /* Анимации */
+  --animate-fade-in: fade-in 0.5s ease-out;
+  --animate-slide-up: slide-up 0.4s ease-out;
+}
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slide-up {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}</code></pre>
+<h3>Использование кастомных значений</h3>
+<pre><code class="language-xml">&lt;!-- Кастомные цвета --&gt;
+&lt;button class="bg-primary hover:bg-primary-dark text-white"&gt;
+  Основная кнопка
+&lt;/button&gt;
+
+&lt;span class="text-secondary"&gt;Акцентный текст&lt;/span&gt;
+
+&lt;!-- Кастомные шрифты --&gt;
+&lt;h1 class="font-display text-4xl"&gt;Заголовок&lt;/h1&gt;
+&lt;p class="font-sans"&gt;Основной текст&lt;/p&gt;
+
+&lt;!-- Кастомные размеры --&gt;
+&lt;div class="p-18 max-w-128"&gt;Контент&lt;/div&gt;
+
+&lt;!-- Кастомные тени --&gt;
+&lt;div class="shadow-soft hover:shadow-glow transition-shadow"&gt;
+  Карточка с мягкой тенью
+&lt;/div&gt;
+
+&lt;!-- Кастомные анимации --&gt;
+&lt;div class="animate-fade-in"&gt;Появление&lt;/div&gt;
+&lt;div class="animate-slide-up"&gt;Выезд снизу&lt;/div&gt;</code></pre>
+<h3>Сброс дефолтных значений</h3>
+<pre><code class="language-css">@theme {
+  /* Убрать все дефолтные цвета и задать свои */
+  --color-*: initial;
+
+  --color-brand: #2563eb;
+  --color-brand-light: #3b82f6;
+  --color-brand-dark: #1d4ed8;
+
+  --color-neutral-50: #fafafa;
+  --color-neutral-100: #f5f5f5;
+  --color-neutral-200: #e5e5e5;
+  --color-neutral-300: #d4d4d4;
+  --color-neutral-400: #a3a3a3;
+  --color-neutral-500: #737373;
+  --color-neutral-600: #525252;
+  --color-neutral-700: #404040;
+  --color-neutral-800: #262626;
+  --color-neutral-900: #171717;
+}</code></pre>
+<hr>
+<h2>Компоненты</h2>
+<p>Создадим переиспользуемые компоненты с помощью <code>@layer components</code>.</p>
+<h3>Кнопки</h3>
+<pre><code class="language-css">@import "tailwindcss";
+
+@layer components {
+  .btn {
+    @apply px-4 py-2 rounded-lg font-medium transition-all duration-200;
+    @apply focus:outline-none focus:ring-2 focus:ring-offset-2;
+  }
+
+  .btn-primary {
+    @apply btn bg-blue-600 text-white;
+    @apply hover:bg-blue-700;
+    @apply focus:ring-blue-500;
+  }
+
+  .btn-secondary {
+    @apply btn bg-gray-200 text-gray-800;
+    @apply hover:bg-gray-300;
+    @apply focus:ring-gray-400;
+  }
+
+  .btn-outline {
+    @apply btn border-2 border-blue-600 text-blue-600 bg-transparent;
+    @apply hover:bg-blue-600 hover:text-white;
+    @apply focus:ring-blue-500;
+  }
+
+  .btn-ghost {
+    @apply btn text-gray-600 bg-transparent;
+    @apply hover:bg-gray-100;
+    @apply focus:ring-gray-400;
+  }
+
+  .btn-sm {
+    @apply px-3 py-1.5 text-sm;
+  }
+
+  .btn-lg {
+    @apply px-6 py-3 text-lg;
+  }
+}</code></pre>
+<p><strong>Использование:</strong></p>
+<pre><code class="language-xml">&lt;button class="btn-primary"&gt;Основная&lt;/button&gt;
+&lt;button class="btn-secondary"&gt;Вторичная&lt;/button&gt;
+&lt;button class="btn-outline"&gt;С обводкой&lt;/button&gt;
+&lt;button class="btn-ghost"&gt;Прозрачная&lt;/button&gt;
+
+&lt;button class="btn-primary btn-sm"&gt;Маленькая&lt;/button&gt;
+&lt;button class="btn-primary btn-lg"&gt;Большая&lt;/button&gt;</code></pre>
+<h3>Инпуты</h3>
+<pre><code class="language-css">@layer components {
+  .input {
+    @apply w-full px-4 py-2 rounded-lg border border-gray-300;
+    @apply bg-white text-gray-900;
+    @apply focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent;
+    @apply placeholder:text-gray-400;
+    @apply transition-all duration-200;
+  }
+
+  .input-error {
+    @apply input border-red-500 focus:ring-red-500;
+  }
+
+  .label {
+    @apply block text-sm font-medium text-gray-700 mb-1;
+  }
+
+  .input-group {
+    @apply space-y-1;
+  }
+
+  .error-text {
+    @apply text-sm text-red-600 mt-1;
+  }
+}</code></pre>
+<p><strong>Использование:</strong></p>
+<pre><code class="language-xml">&lt;div class="input-group"&gt;
+  &lt;label class="label"&gt;Email&lt;/label&gt;
+  &lt;input type="email" class="input" placeholder="you@example.com"&gt;
+&lt;/div&gt;
+
+&lt;div class="input-group"&gt;
+  &lt;label class="label"&gt;Пароль&lt;/label&gt;
+  &lt;input type="password" class="input-error" placeholder="********"&gt;
+  &lt;p class="error-text"&gt;Минимум 8 символов&lt;/p&gt;
+&lt;/div&gt;</code></pre>
+<h3>Карточки</h3>
+<pre><code class="language-css">@layer components {
+  .card {
+    @apply bg-white rounded-xl shadow-md overflow-hidden;
+    @apply dark:bg-gray-800;
+  }
+
+  .card-hover {
+    @apply card transition-all duration-300;
+    @apply hover:shadow-xl hover:-translate-y-1;
+  }
+
+  .card-body {
+    @apply p-6;
+  }
+
+  .card-title {
+    @apply text-xl font-bold text-gray-900 dark:text-white;
+  }
+
+  .card-text {
+    @apply text-gray-600 dark:text-gray-300 mt-2;
+  }
+
+  .card-footer {
+    @apply px-6 py-4 bg-gray-50 dark:bg-gray-700/50;
+  }
+}</code></pre>
+<hr>
+<h2>Практика: Многостраничный сайт</h2>
+<p>Создадим полноценный многостраничный шаблон с:</p>
+<ul class="styled-list">
+<li>Главная страница</li>
+<li>О компании</li>
+<li>Услуги</li>
+<li>Контакты</li>
+</ul>
+<h3>Структура проекта</h3>
+<pre><code class="language-text">my-website/
+├── index.html          # Главная
+├── about.html          # О нас
+├── services.html       # Услуги
+├── contact.html        # Контакты
+├── src/
+│   └── styles.css      # Стили
+└── package.json</code></pre>
+<h3>styles.css</h3>
+<pre><code class="language-css">@import "tailwindcss";
+
+@theme {
+  --color-primary: #2563eb;
+  --color-primary-dark: #1d4ed8;
+  --color-secondary: #7c3aed;
+  --font-sans: "Inter", system-ui, sans-serif;
+  --shadow-card: 0 4px 20px rgba(0, 0, 0, 0.08);
+}
+
+@variant dark (&amp;:where(.dark, .dark *));
+
+@layer components {
+  /* Кнопки */
+  .btn {
+    @apply inline-flex items-center justify-center gap-2;
+    @apply px-5 py-2.5 rounded-lg font-medium;
+    @apply transition-all duration-200;
+    @apply focus:outline-none focus:ring-2 focus:ring-offset-2;
+  }
+
+  .btn-primary {
+    @apply btn bg-primary text-white hover:bg-primary-dark focus:ring-primary;
+  }
+
+  .btn-white {
+    @apply btn bg-white text-primary hover:bg-gray-100 focus:ring-white;
+  }
+
+  .btn-outline {
+    @apply btn border-2 border-white text-white hover:bg-white/10;
+  }
+
+  /* Карточки */
+  .card {
+    @apply bg-white rounded-2xl shadow-card p-6;
+    @apply dark:bg-gray-800;
+  }
+
+  /* Секции */
+  .section {
+    @apply py-16 md:py-24;
+  }
+
+  .container-main {
+    @apply max-w-6xl mx-auto px-4 sm:px-6 lg:px-8;
+  }
+
+  /* Заголовки секций */
+  .section-title {
+    @apply text-3xl md:text-4xl font-bold text-gray-900 dark:text-white;
+  }
+
+  .section-subtitle {
+    @apply mt-4 text-lg text-gray-600 dark:text-gray-400 max-w-2xl;
+  }
+}</code></pre>
+<h3>Общий Header (для всех страниц)</h3>
+<pre><code class="language-xml">&lt;!-- Header --&gt;
+&lt;header class="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md border-b border-gray-200 dark:bg-gray-900/80 dark:border-gray-700"&gt;
+  &lt;div class="container-main"&gt;
+    &lt;div class="flex items-center justify-between h-16"&gt;
+      &lt;!-- Logo --&gt;
+      &lt;a href="index.html" class="flex items-center gap-2"&gt;
+        &lt;div class="w-8 h-8 bg-primary rounded-lg flex items-center justify-center"&gt;
+          &lt;span class="text-white font-bold"&gt;M&lt;/span&gt;
+        &lt;/div&gt;
+        &lt;span class="text-xl font-bold text-gray-900 dark:text-white"&gt;MyBrand&lt;/span&gt;
+      &lt;/a&gt;
+
+      &lt;!-- Desktop Navigation --&gt;
+      &lt;nav class="hidden md:flex items-center gap-8"&gt;
+        &lt;a href="index.html" class="text-gray-600 hover:text-primary transition dark:text-gray-300"&gt;Главная&lt;/a&gt;
+        &lt;a href="about.html" class="text-gray-600 hover:text-primary transition dark:text-gray-300"&gt;О нас&lt;/a&gt;
+        &lt;a href="services.html" class="text-gray-600 hover:text-primary transition dark:text-gray-300"&gt;Услуги&lt;/a&gt;
+        &lt;a href="contact.html" class="text-gray-600 hover:text-primary transition dark:text-gray-300"&gt;Контакты&lt;/a&gt;
+      &lt;/nav&gt;
+
+      &lt;!-- Actions --&gt;
+      &lt;div class="flex items-center gap-4"&gt;
+        &lt;button onclick="toggleDark()" class="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition"&gt;
+          &lt;svg class="w-5 h-5 text-gray-600 dark:hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"&gt;
+            &lt;path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/&gt;
+          &lt;/svg&gt;
+          &lt;svg class="w-5 h-5 text-gray-300 hidden dark:block" fill="none" stroke="currentColor" viewBox="0 0 24 24"&gt;
+            &lt;path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/&gt;
+          &lt;/svg&gt;
+        &lt;/button&gt;
+        &lt;a href="contact.html" class="btn-primary hidden sm:inline-flex"&gt;
+          Связаться
+        &lt;/a&gt;
+        &lt;!-- Mobile menu button --&gt;
+        &lt;button class="md:hidden p-2" onclick="toggleMenu()"&gt;
+          &lt;svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"&gt;
+            &lt;path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/&gt;
+          &lt;/svg&gt;
+        &lt;/button&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+
+  &lt;!-- Mobile Menu --&gt;
+  &lt;div id="mobileMenu" class="hidden md:hidden bg-white dark:bg-gray-900 border-t border-gray-200 dark:border-gray-700"&gt;
+    &lt;div class="container-main py-4 space-y-3"&gt;
+      &lt;a href="index.html" class="block py-2 text-gray-600 dark:text-gray-300"&gt;Главная&lt;/a&gt;
+      &lt;a href="about.html" class="block py-2 text-gray-600 dark:text-gray-300"&gt;О нас&lt;/a&gt;
+      &lt;a href="services.html" class="block py-2 text-gray-600 dark:text-gray-300"&gt;Услуги&lt;/a&gt;
+      &lt;a href="contact.html" class="block py-2 text-gray-600 dark:text-gray-300"&gt;Контакты&lt;/a&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/header&gt;
+
+&lt;script&gt;
+function toggleDark() {
+  document.documentElement.classList.toggle('dark');
+  localStorage.setItem('theme', document.documentElement.classList.contains('dark') ? 'dark' : 'light');
+}
+
+function toggleMenu() {
+  document.getElementById('mobileMenu').classList.toggle('hidden');
+}
+
+if (localStorage.theme === 'dark' || (!localStorage.theme &amp;&amp; window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+  document.documentElement.classList.add('dark');
+}
+&lt;/script&gt;</code></pre>
+<h3>index.html — Главная страница</h3>
+<pre><code class="language-xml">&lt;!DOCTYPE html&gt;
+&lt;html lang="ru"&gt;
+&lt;head&gt;
+  &lt;meta charset="UTF-8"&gt;
+  &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+  &lt;title&gt;MyBrand — Цифровые решения&lt;/title&gt;
+  &lt;link rel="preconnect" href="https://fonts.googleapis.com"&gt;
+  &lt;link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"&gt;
+  &lt;link rel="stylesheet" href="src/styles.css"&gt;
+&lt;/head&gt;
+&lt;body class="bg-gray-50 dark:bg-gray-900"&gt;
+  &lt;!-- Header здесь --&gt;
+
+  &lt;main class="pt-16"&gt;
+    &lt;!-- Hero Section --&gt;
+    &lt;section class="relative overflow-hidden bg-gradient-to-br from-primary to-secondary min-h-[90vh] flex items-center"&gt;
+      &lt;div class="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20"&gt;&lt;/div&gt;
+      &lt;div class="container-main relative z-10"&gt;
+        &lt;div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center"&gt;
+          &lt;div class="text-center lg:text-left"&gt;
+            &lt;span class="inline-block px-4 py-1.5 bg-white/20 text-white rounded-full text-sm font-medium mb-6"&gt;
+              Новое поколение решений
+            &lt;/span&gt;
+            &lt;h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold text-white leading-tight"&gt;
+              Создаём цифровое
+              &lt;span class="block"&gt;будущее вместе&lt;/span&gt;
+            &lt;/h1&gt;
+            &lt;p class="mt-6 text-lg sm:text-xl text-white/80 max-w-xl mx-auto lg:mx-0"&gt;
+              Мы помогаем компаниям трансформироваться и расти с помощью
+              современных технологий и инновационных решений.
+            &lt;/p&gt;
+            &lt;div class="mt-10 flex flex-col sm:flex-row gap-4 justify-center lg:justify-start"&gt;
+              &lt;a href="contact.html" class="btn-white"&gt;
+                Начать проект
+                &lt;svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"&gt;
+                  &lt;path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/&gt;
+                &lt;/svg&gt;
+              &lt;/a&gt;
+              &lt;a href="about.html" class="btn-outline"&gt;
+                Узнать больше
+              &lt;/a&gt;
+            &lt;/div&gt;
+          &lt;/div&gt;
+          &lt;div class="hidden lg:block"&gt;
+            &lt;img src="https://picsum.photos/600/500" alt="Hero" class="rounded-2xl shadow-2xl"&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/section&gt;
+
+    &lt;!-- Features Section --&gt;
+    &lt;section class="section bg-white dark:bg-gray-800"&gt;
+      &lt;div class="container-main"&gt;
+        &lt;div class="text-center mb-16"&gt;
+          &lt;h2 class="section-title"&gt;Почему выбирают нас&lt;/h2&gt;
+          &lt;p class="section-subtitle mx-auto"&gt;
+            Мы объединяем опыт, технологии и креативность для достижения ваших целей
+          &lt;/p&gt;
+        &lt;/div&gt;
+
+        &lt;div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"&gt;
+          &lt;!-- Feature 1 --&gt;
+          &lt;div class="card group hover:shadow-xl transition-all duration-300"&gt;
+            &lt;div class="w-14 h-14 bg-blue-100 dark:bg-blue-900/50 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform"&gt;
+              &lt;svg class="w-7 h-7 text-blue-600 dark:text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"&gt;
+                &lt;path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/&gt;
+              &lt;/svg&gt;
+            &lt;/div&gt;
+            &lt;h3 class="text-xl font-bold text-gray-900 dark:text-white mb-3"&gt;Быстрая разработка&lt;/h3&gt;
+            &lt;p class="text-gray-600 dark:text-gray-400"&gt;
+              Используем современные технологии для ускорения разработки без потери качества.
+            &lt;/p&gt;
+          &lt;/div&gt;
+
+          &lt;!-- Feature 2 --&gt;
+          &lt;div class="card group hover:shadow-xl transition-all duration-300"&gt;
+            &lt;div class="w-14 h-14 bg-green-100 dark:bg-green-900/50 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform"&gt;
+              &lt;svg class="w-7 h-7 text-green-600 dark:text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"&gt;
+                &lt;path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/&gt;
+              &lt;/svg&gt;
+            &lt;/div&gt;
+            &lt;h3 class="text-xl font-bold text-gray-900 dark:text-white mb-3"&gt;Надёжность&lt;/h3&gt;
+            &lt;p class="text-gray-600 dark:text-gray-400"&gt;
+              Гарантируем стабильную работу и поддержку на всех этапах сотрудничества.
+            &lt;/p&gt;
+          &lt;/div&gt;
+
+          &lt;!-- Feature 3 --&gt;
+          &lt;div class="card group hover:shadow-xl transition-all duration-300"&gt;
+            &lt;div class="w-14 h-14 bg-purple-100 dark:bg-purple-900/50 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform"&gt;
+              &lt;svg class="w-7 h-7 text-purple-600 dark:text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"&gt;
+                &lt;path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01"/&gt;
+              &lt;/svg&gt;
+            &lt;/div&gt;
+            &lt;h3 class="text-xl font-bold text-gray-900 dark:text-white mb-3"&gt;Уникальный дизайн&lt;/h3&gt;
+            &lt;p class="text-gray-600 dark:text-gray-400"&gt;
+              Каждый проект создаётся с нуля под ваши уникальные потребности и бренд.
+            &lt;/p&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/section&gt;
+
+    &lt;!-- Stats Section --&gt;
+    &lt;section class="section bg-gray-50 dark:bg-gray-900"&gt;
+      &lt;div class="container-main"&gt;
+        &lt;div class="grid grid-cols-2 md:grid-cols-4 gap-8"&gt;
+          &lt;div class="text-center"&gt;
+            &lt;div class="text-4xl md:text-5xl font-bold text-primary"&gt;150+&lt;/div&gt;
+            &lt;div class="mt-2 text-gray-600 dark:text-gray-400"&gt;Проектов&lt;/div&gt;
+          &lt;/div&gt;
+          &lt;div class="text-center"&gt;
+            &lt;div class="text-4xl md:text-5xl font-bold text-primary"&gt;50+&lt;/div&gt;
+            &lt;div class="mt-2 text-gray-600 dark:text-gray-400"&gt;Клиентов&lt;/div&gt;
+          &lt;/div&gt;
+          &lt;div class="text-center"&gt;
+            &lt;div class="text-4xl md:text-5xl font-bold text-primary"&gt;8&lt;/div&gt;
+            &lt;div class="mt-2 text-gray-600 dark:text-gray-400"&gt;Лет опыта&lt;/div&gt;
+          &lt;/div&gt;
+          &lt;div class="text-center"&gt;
+            &lt;div class="text-4xl md:text-5xl font-bold text-primary"&gt;24/7&lt;/div&gt;
+            &lt;div class="mt-2 text-gray-600 dark:text-gray-400"&gt;Поддержка&lt;/div&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/section&gt;
+
+    &lt;!-- CTA Section --&gt;
+    &lt;section class="section bg-primary"&gt;
+      &lt;div class="container-main text-center"&gt;
+        &lt;h2 class="text-3xl md:text-4xl font-bold text-white"&gt;
+          Готовы начать проект?
+        &lt;/h2&gt;
+        &lt;p class="mt-4 text-lg text-white/80 max-w-2xl mx-auto"&gt;
+          Свяжитесь с нами сегодня и получите бесплатную консультацию
+          по вашему проекту.
+        &lt;/p&gt;
+        &lt;a href="contact.html" class="btn-white mt-8 inline-flex"&gt;
+          Связаться с нами
+          &lt;svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"&gt;
+            &lt;path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/&gt;
+          &lt;/svg&gt;
+        &lt;/a&gt;
+      &lt;/div&gt;
+    &lt;/section&gt;
+  &lt;/main&gt;
+
+  &lt;!-- Footer --&gt;
+  &lt;footer class="bg-gray-900 text-gray-400 py-12"&gt;
+    &lt;div class="container-main"&gt;
+      &lt;div class="grid grid-cols-1 md:grid-cols-4 gap-8"&gt;
+        &lt;div class="md:col-span-2"&gt;
+          &lt;div class="flex items-center gap-2 mb-4"&gt;
+            &lt;div class="w-8 h-8 bg-primary rounded-lg flex items-center justify-center"&gt;
+              &lt;span class="text-white font-bold"&gt;M&lt;/span&gt;
+            &lt;/div&gt;
+            &lt;span class="text-xl font-bold text-white"&gt;MyBrand&lt;/span&gt;
+          &lt;/div&gt;
+          &lt;p class="max-w-sm"&gt;
+            Создаём цифровые продукты, которые помогают бизнесу расти и развиваться.
+          &lt;/p&gt;
+        &lt;/div&gt;
+        &lt;div&gt;
+          &lt;h4 class="text-white font-semibold mb-4"&gt;Навигация&lt;/h4&gt;
+          &lt;ul class="space-y-2"&gt;
+            &lt;li&gt;&lt;a href="index.html" class="hover:text-white transition"&gt;Главная&lt;/a&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;a href="about.html" class="hover:text-white transition"&gt;О нас&lt;/a&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;a href="services.html" class="hover:text-white transition"&gt;Услуги&lt;/a&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;a href="contact.html" class="hover:text-white transition"&gt;Контакты&lt;/a&gt;&lt;/li&gt;
+          &lt;/ul&gt;
+        &lt;/div&gt;
+        &lt;div&gt;
+          &lt;h4 class="text-white font-semibold mb-4"&gt;Контакты&lt;/h4&gt;
+          &lt;ul class="space-y-2"&gt;
+            &lt;li&gt;info@mybrand.com&lt;/li&gt;
+            &lt;li&gt;+7 (999) 123-45-67&lt;/li&gt;
+            &lt;li&gt;г. Москва&lt;/li&gt;
+          &lt;/ul&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+      &lt;div class="mt-12 pt-8 border-t border-gray-800 text-center"&gt;
+        &lt;p&gt;&amp;copy; 2024 MyBrand. Все права защищены.&lt;/p&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/footer&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+<h3>contact.html — Страница контактов</h3>
+<pre><code class="language-xml">&lt;!DOCTYPE html&gt;
+&lt;html lang="ru"&gt;
+&lt;head&gt;
+  &lt;meta charset="UTF-8"&gt;
+  &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+  &lt;title&gt;Контакты — MyBrand&lt;/title&gt;
+  &lt;link rel="preconnect" href="https://fonts.googleapis.com"&gt;
+  &lt;link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"&gt;
+  &lt;link rel="stylesheet" href="src/styles.css"&gt;
+&lt;/head&gt;
+&lt;body class="bg-gray-50 dark:bg-gray-900"&gt;
+  &lt;!-- Header здесь (тот же) --&gt;
+
+  &lt;main class="pt-16"&gt;
+    &lt;!-- Hero --&gt;
+    &lt;section class="section bg-white dark:bg-gray-800"&gt;
+      &lt;div class="container-main"&gt;
+        &lt;div class="text-center mb-12"&gt;
+          &lt;h1 class="section-title"&gt;Свяжитесь с нами&lt;/h1&gt;
+          &lt;p class="section-subtitle mx-auto"&gt;
+            Готовы обсудить ваш проект? Заполните форму или свяжитесь любым удобным способом.
+          &lt;/p&gt;
+        &lt;/div&gt;
+
+        &lt;div class="grid grid-cols-1 lg:grid-cols-3 gap-8"&gt;
+          &lt;!-- Contact Info --&gt;
+          &lt;div class="space-y-6"&gt;
+            &lt;div class="card flex items-start gap-4"&gt;
+              &lt;div class="w-12 h-12 bg-blue-100 dark:bg-blue-900/50 rounded-lg flex items-center justify-center flex-shrink-0"&gt;
+                &lt;svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"&gt;
+                  &lt;path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/&gt;
+                &lt;/svg&gt;
+              &lt;/div&gt;
+              &lt;div&gt;
+                &lt;h3 class="font-semibold text-gray-900 dark:text-white"&gt;Email&lt;/h3&gt;
+                &lt;p class="text-gray-600 dark:text-gray-400 mt-1"&gt;info@mybrand.com&lt;/p&gt;
+              &lt;/div&gt;
+            &lt;/div&gt;
+
+            &lt;div class="card flex items-start gap-4"&gt;
+              &lt;div class="w-12 h-12 bg-green-100 dark:bg-green-900/50 rounded-lg flex items-center justify-center flex-shrink-0"&gt;
+                &lt;svg class="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"&gt;
+                  &lt;path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/&gt;
+                &lt;/svg&gt;
+              &lt;/div&gt;
+              &lt;div&gt;
+                &lt;h3 class="font-semibold text-gray-900 dark:text-white"&gt;Телефон&lt;/h3&gt;
+                &lt;p class="text-gray-600 dark:text-gray-400 mt-1"&gt;+7 (999) 123-45-67&lt;/p&gt;
+              &lt;/div&gt;
+            &lt;/div&gt;
+
+            &lt;div class="card flex items-start gap-4"&gt;
+              &lt;div class="w-12 h-12 bg-purple-100 dark:bg-purple-900/50 rounded-lg flex items-center justify-center flex-shrink-0"&gt;
+                &lt;svg class="w-6 h-6 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"&gt;
+                  &lt;path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/&gt;
+                  &lt;path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/&gt;
+                &lt;/svg&gt;
+              &lt;/div&gt;
+              &lt;div&gt;
+                &lt;h3 class="font-semibold text-gray-900 dark:text-white"&gt;Адрес&lt;/h3&gt;
+                &lt;p class="text-gray-600 dark:text-gray-400 mt-1"&gt;г. Москва, ул. Примерная, д. 1&lt;/p&gt;
+              &lt;/div&gt;
+            &lt;/div&gt;
+          &lt;/div&gt;
+
+          &lt;!-- Contact Form --&gt;
+          &lt;div class="lg:col-span-2"&gt;
+            &lt;form class="card"&gt;
+              &lt;div class="grid grid-cols-1 sm:grid-cols-2 gap-6"&gt;
+                &lt;div&gt;
+                  &lt;label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2"&gt;
+                    Имя
+                  &lt;/label&gt;
+                  &lt;input
+                    type="text"
+                    class="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-primary focus:border-transparent transition"
+                    placeholder="Ваше имя"
+                  &gt;
+                &lt;/div&gt;
+                &lt;div&gt;
+                  &lt;label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2"&gt;
+                    Email
+                  &lt;/label&gt;
+                  &lt;input
+                    type="email"
+                    class="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-primary focus:border-transparent transition"
+                    placeholder="you@example.com"
+                  &gt;
+                &lt;/div&gt;
+              &lt;/div&gt;
+
+              &lt;div class="mt-6"&gt;
+                &lt;label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2"&gt;
+                  Тема
+                &lt;/label&gt;
+                &lt;select class="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-primary focus:border-transparent transition"&gt;
+                  &lt;option&gt;Выберите тему&lt;/option&gt;
+                  &lt;option&gt;Разработка сайта&lt;/option&gt;
+                  &lt;option&gt;Мобильное приложение&lt;/option&gt;
+                  &lt;option&gt;Дизайн&lt;/option&gt;
+                  &lt;option&gt;Консультация&lt;/option&gt;
+                  &lt;option&gt;Другое&lt;/option&gt;
+                &lt;/select&gt;
+              &lt;/div&gt;
+
+              &lt;div class="mt-6"&gt;
+                &lt;label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2"&gt;
+                  Сообщение
+                &lt;/label&gt;
+                &lt;textarea
+                  rows="5"
+                  class="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-primary focus:border-transparent transition resize-none"
+                  placeholder="Опишите ваш проект..."
+                &gt;&lt;/textarea&gt;
+              &lt;/div&gt;
+
+              &lt;button type="submit" class="btn-primary w-full mt-6"&gt;
+                Отправить сообщение
+                &lt;svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"&gt;
+                  &lt;path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"/&gt;
+                &lt;/svg&gt;
+              &lt;/button&gt;
+            &lt;/form&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/section&gt;
+  &lt;/main&gt;
+
+  &lt;!-- Footer здесь (тот же) --&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+<hr>
+<h2>Чеклист изученного</h2>
+<ul class="styled-list">
+<li class="checklist"><input type="checkbox" disabled> Понимаю что такое utility-first подход</li>
+<li class="checklist"><input type="checkbox" disabled> Могу установить Tailwind CSS 4</li>
+<li class="checklist"><input type="checkbox" disabled> Знаю основные классы (цвета, отступы, типографика)</li>
+<li class="checklist"><input type="checkbox" disabled> Умею работать с Flexbox и Grid</li>
+<li class="checklist"><input type="checkbox" disabled> Понимаю адаптивный дизайн (sm, md, lg, xl)</li>
+<li class="checklist"><input type="checkbox" disabled> Могу настроить тёмную тему</li>
+<li class="checklist"><input type="checkbox" disabled> Умею кастомизировать через @theme</li>
+<li class="checklist"><input type="checkbox" disabled> Могу создавать компоненты через @layer</li>
+<li class="checklist"><input type="checkbox" disabled> Способен сверстать многостраничный сайт</li>
+</ul>
+<hr>
+<h2>Полезные ресурсы</h2>
+<ul class="styled-list">
+<li><a href="https://tailwindcss.com/docs">Официальная документация</a></li>
+<li><a href="https://tailwindui.com">Tailwind UI</a> — готовые компоненты</li>
+<li><a href="https://heroicons.com">Heroicons</a> — иконки от создателей Tailwind</li>
+<li><a href="https://headlessui.com">Headless UI</a> — доступные компоненты</li>
+</ul>
+<hr>
+<p><strong>Поздравляю!</strong> Вы прошли полный курс по Tailwind CSS 4. Теперь вы можете создавать современные адаптивные сайты с тёмной темой и кастомным дизайном.</p>
+
+            </div>
+
+            <div class="chapter-nav">
+                <button class="nav-btn nav-btn-prev" onclick="navigateTo('chapter9')">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="19" y1="12" x2="5" y2="12"/>
+                        <polyline points="12,19 5,12 12,5"/>
+                    </svg>
+                    Назад
+                </button>
                 <button class="nav-btn nav-btn-next" onclick="navigateTo('intro')">
                     На главную
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">

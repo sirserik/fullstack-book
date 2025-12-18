@@ -11,6 +11,7 @@ const chapters = [
   { id: 'chapter7', dir: '07-Laravel12-API', title: 'Laravel 12 API', num: '07' },
   { id: 'chapter8', dir: '08-Nuxt4', title: 'Nuxt 4', num: '08' },
   { id: 'chapter9', dir: '09-Tailwind4', title: 'Tailwind CSS 4', num: '09' },
+  { id: 'chapter10', dir: '10-Tailwind4-Tutorial', title: 'Tailwind 4 Туториал', num: '10' },
 ];
 
 const basePath = '/Users/serik/Desktop/Laravel-Nuxt-Book';
