@@ -3,12 +3,22 @@
  */
 
 document.addEventListener('DOMContentLoaded', function() {
-  initNavigation();
   initMobileMenu();
   initSyntaxHighlighting();
 
-  // Show intro by default
-  showChapter('intro');
+  // Show chapter from URL hash or intro by default
+  const hash = window.location.hash.slice(1);
+  showChapter(hash || 'intro');
+
+  initNavigation();
+
+  // Hide preloader
+  setTimeout(function() {
+    const preloader = document.getElementById('preloader');
+    if (preloader) {
+      preloader.classList.add('hidden');
+    }
+  }, 300);
 });
 
 /**
@@ -43,8 +53,8 @@ function showChapter(chapterId) {
     }
   });
 
-  // Scroll to top
-  window.scrollTo({ top: 0, behavior: 'smooth' });
+  // Scroll to top instantly
+  window.scrollTo(0, 0);
 
   // Close mobile menu if open
   closeMobileMenu();
@@ -75,12 +85,6 @@ function initNavigation() {
     const hash = window.location.hash.slice(1) || 'intro';
     showChapter(hash);
   });
-
-  // Load initial hash if present
-  if (window.location.hash) {
-    const hash = window.location.hash.slice(1);
-    showChapter(hash);
-  }
 }
 
 /**

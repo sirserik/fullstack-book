@@ -34,6 +34,10 @@ function mapLanguage(lang) {
     'js': 'javascript',
     'ts': 'typescript',
     'yml': 'yaml',
+    'dockerignore': 'text',
+    'gitignore': 'text',
+    'promql': 'text',
+    'logql': 'text',
   };
   return aliases[lang] || lang;
 }

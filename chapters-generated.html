@@ -4970,7 +4970,7 @@ FROM node:18.19.0-alpine3.19     # ✓ Конкретная версия
 # Используйте digest для максимальной безопасности
 FROM php@sha256:abc123...  # ✓ Неизменяемый образ</code></pre>
 <h4>.dockerignore для безопасности</h4>
-<pre><code class="language-dockerignore"># .dockerignore
+<pre><code class="language-text"># .dockerignore
 
 # Git
 .git
@@ -5061,7 +5061,7 @@ services:
 DB_PASSWORD=super_secret_password
 APP_KEY=base64:your_app_key
 REDIS_PASSWORD=redis_secret</code></pre>
-<pre><code class="language-gitignore"># .gitignore
+<pre><code class="language-text"># .gitignore
 .env.prod.secrets
 *.secrets</code></pre>
 <h4>HashiCorp Vault интеграция</h4>
@@ -6451,7 +6451,7 @@ datasources:
     access: proxy
     url: http://loki:3100</code></pre>
 <h4>Полезные запросы для Grafana</h4>
-<pre><code class="language-promql"># CPU Usage по контейнерам
+<pre><code class="language-text"># CPU Usage по контейнерам
 sum(rate(container_cpu_usage_seconds_total{name!=""}[5m])) by (name) * 100
 
 # Memory Usage по контейнерам
@@ -6472,7 +6472,7 @@ redis_memory_used_bytes / 1024 / 1024
 # Disk Usage
 100 - ((node_filesystem_avail_bytes{fstype!~"tmpfs|overlay"} / node_filesystem_size_bytes) * 100)</code></pre>
 <h4>LogQL запросы для Loki</h4>
-<pre><code class="language-logql"># Все логи Laravel
+<pre><code class="language-text"># Все логи Laravel
 {job="laravel"}
 
 # Ошибки Laravel
