@@ -100,6 +100,19 @@ body {
   border-bottom: 1px solid rgba(255,255,255,0.1);
 }
 
+.back-to-books {
+  display: block;
+  font-size: 0.8rem;
+  color: var(--gray);
+  text-decoration: none;
+  margin-bottom: 1rem;
+  transition: color 0.2s ease;
+}
+
+.back-to-books:hover {
+  color: white;
+}
+
 .logo {
   display: flex;
   align-items: center;
